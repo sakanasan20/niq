@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html 
 	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
 	<meta charset="UTF-8">
@@ -12,6 +13,10 @@
 <body>
 	<div class="container-fluid">
 		<h1 th:text="'Index'"></h1>
+		<p sec:authorize="isAuthenticated()" th:text="'Welcome ' + ${#authentication?.principal?.username}"></p>
+		<a class="btn btn-primary btn-sm" th:href="@{/logout}" role="button">Logout</a>
+		<a sec:authorize="hasRole('ADMIN')" class="btn btn-primary btn-sm" th:href="@{/admin}" role="button">Admin</a>
+		<a sec:authorize="hasAuthority('read')" class="btn btn-primary btn-sm" th:href="@{/users}" role="button">Users</a>
 	</div>
 	<script th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
 </body>

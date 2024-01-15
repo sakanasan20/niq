@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 import tw.niq.service.UserService;
@@ -36,10 +37,19 @@ public class WebSecurity {
 		http.authenticationManager(authenticationManager)
 			.authorizeHttpRequests((authorizeHttpRequests) -> 
 				authorizeHttpRequests
-						.requestMatchers("/resources/**", "/webjars/**", "/login", "/logout").permitAll()
+						.requestMatchers("/resources/**", "/webjars/**", "/css/**", "/login", "/logout").permitAll()
 						.anyRequest().authenticated())
 			.httpBasic(Customizer.withDefaults())
-			.formLogin(Customizer.withDefaults());
+			.formLogin(formLogin -> 
+				formLogin
+					.loginProcessingUrl("/login")
+					.loginPage("/login").permitAll()
+					.successForwardUrl("/")
+					.defaultSuccessUrl("/"))
+			.logout(logout -> 
+				logout
+					.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+					.logoutSuccessUrl("/login?logout"));
 		
 		return http.build();
 	}

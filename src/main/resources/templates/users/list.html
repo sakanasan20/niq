@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html 
 	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
 	<meta charset="UTF-8">
@@ -25,8 +26,8 @@
 					<th scope="row" th:text="${user.id}"></th>
 					<td th:text="${user.username}"></td>
 					<td>
-						<a class="btn btn-primary btn-sm" th:href="@{/users/{id}/update(id=${user.id})}" role="button">Update</a>
-						<a class="btn btn-danger btn-sm" th:href="@{/users/{id}/delete(id=${user.id})}" role="button">Delete</a>
+						<a sec:authorize="hasAuthority('write')" class="btn btn-primary btn-sm" th:href="@{/users/{id}/update(id=${user.id})}" role="button">Update</a>
+						<a sec:authorize="hasAuthority('delete')" class="btn btn-danger btn-sm" th:href="@{/users/{id}/delete(id=${user.id})}" role="button">Delete</a>
 					</td>
 				</tr>
 			</tbody>
