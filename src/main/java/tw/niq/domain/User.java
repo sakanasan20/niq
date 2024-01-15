@@ -21,26 +21,33 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Singular;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "niq_user")
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = 3635349131816497567L;
 
+	@ToString.Include
+	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@ToString.Include
 	private String username;
 	
 	private String password;
@@ -57,6 +64,7 @@ public class User implements UserDetails {
 	@Builder.Default
 	private Boolean enabled = true;
 	
+	@ToString.Exclude
 	@Singular
 	@ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "niq_user_role", 
@@ -64,6 +72,7 @@ public class User implements UserDetails {
 			inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID") })
 	private Set<Role> roles;
 	
+	@ToString.Exclude
 	@Transient
 	private Set<Authority> authorities;
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>NIQ</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/dist/css/bootstrap.min.css}">
+  </head>
+</head>
+<body>
+	<div class="container-fluid">
+		<h1 th:text="'Users'"></h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Username</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${users}">
+					<th scope="row" th:text="${user.id}"></th>
+					<td th:text="${user.username}"></td>
+					<td>
+						<a class="btn btn-primary btn-sm" th:href="@{/users/{id}/update(id=${user.id})}" role="button">Update</a>
+						<a class="btn btn-danger btn-sm" th:href="@{/users/{id}/delete(id=${user.id})}" role="button">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
