@@ -39,7 +39,9 @@ public class WebSecurity {
 		http.authenticationManager(authenticationManager)
 			.authorizeHttpRequests((authorizeHttpRequests) -> 
 				authorizeHttpRequests
-						.requestMatchers("/resources/**", "/webjars/**", "/css/**", "/login", "/logout", "/h2-console/**").permitAll()
+						.requestMatchers("/resources/**", "/webjars/**", "/css/**").permitAll()
+						.requestMatchers("/login", "/logout").permitAll()
+						.requestMatchers("/h2-console/**").permitAll()
 						.anyRequest().authenticated())
 			.httpBasic(Customizer.withDefaults())
 			.formLogin(formLogin -> 
@@ -54,12 +56,12 @@ public class WebSecurity {
 					.logoutSuccessUrl("/login?logout"))
 			.rememberMe(rememberMe -> 
 				rememberMe
-//					.key("niq-key")
 					.tokenRepository(persistentTokenRepository)
 					.userDetailsService(userService)
 					.rememberMeParameter("remember-me"))
-			.csrf((csrf) -> csrf.disable())
-			.headers((headers) -> headers.frameOptions((frameOptions) -> frameOptions.disable()));
+			.csrf((csrf) -> csrf.ignoringRequestMatchers("/h2-console/**"))
+			.headers((headers) -> headers.frameOptions((frameOptions) -> frameOptions.sameOrigin()))
+			.cors(Customizer.withDefaults());
 		
 		return http.build();
 	}
