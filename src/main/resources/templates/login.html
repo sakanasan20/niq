@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html 
 	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
 	<meta charset="UTF-8">
@@ -14,7 +15,8 @@
 	<main class="form-signin">
 		<form th:action="@{/login}" method="post">
 			<h1 class="h3 mb-3 fw-normal">NIQ</h1>
-			<div th:if="${param.error}" class="alert alert-danger mt-3">Invalid username or password</div>
+			<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']?.message == '憑證錯誤'}" class="alert alert-danger mt-3" th:text="' Invalid username or password'"></div>
+			<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']?.message == 'User account is locked'}" class="alert alert-danger mt-3" th:text="'User account is locked'"></div>
 			<div th:if="${param.logout}" class="alert alert-success mt-3">You have logged out</div>
 			<div class="form-floating">
 				<input type="text" class="form-control" id="username" name="username" placeholder="Username">

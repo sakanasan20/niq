@@ -1,14 +1,18 @@
 package tw.niq.domain;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -64,7 +68,13 @@ public class User implements UserDetails {
 	@Builder.Default
 	private Boolean enabled = true;
 	
-	@ToString.Exclude
+	@CreationTimestamp
+	@Column(updatable = false)
+	private Timestamp createdDate;
+	
+	@UpdateTimestamp
+	private Timestamp lastModifiedDate;
+	
 	@Singular
 	@ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "niq_user_role", 
@@ -72,7 +82,6 @@ public class User implements UserDetails {
 			inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID") })
 	private Set<Role> roles;
 	
-	@ToString.Exclude
 	@Transient
 	private Set<Authority> authorities;
 
