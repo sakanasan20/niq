@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>NIQ</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/dist/css/bootstrap.min.css}">
+  </head>
+</head>
+<body>
+	<div class="container">
+		<h1 th:text="'Add User'"></h1>
+		<form th:object="${user}" th:action="@{/users/save}" method="post">
+			<input type="hidden" th:field="*{id}">
+			<div class="row g-3">
+				<div class="col-md-6">
+					<label for="username" class="form-label">Username</label> 
+					<input type="text" class="form-control" th:field="*{username}" id="username" placeholder="Username">
+				</div>
+				<div class="col-md-6" th:if="*{id} == null">
+					<label for="password" class="form-label">Password</label>
+					<input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Password">
+				</div>
+			</div>
+			<div class="row g-3 mt-1">
+				<div class="col-md-6">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" th:field="*{accountNonExpired}" id="accountNonExpired">
+						<label class="form-check-label" for="accountNonExpired">Account Non Expired</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" th:field="*{accountNonLocked}" id="accountNonLocked">
+						<label class="form-check-label" for="accountNonLocked">Account Non Locked</label>
+					</div>
+				</div>
+			</div>
+			<div class="row g-3 mt-1">
+				<div class="col-md-6">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" th:field="*{credentialsNonExpired}" id="credentialsNonExpired">
+						<label class="form-check-label" for="credentialsNonExpired">Credentials Non Expired</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" th:field="*{enabled}" id="enabled">
+						<label class="form-check-label" for="enabled">Enabled</label>
+					</div>
+				</div>
+			</div>
+			<div class="row g-3 mt-1">
+				<div class="col-md-6">
+					<input class="btn btn-sm btn-primary" type="submit" value="Save">
+				</div>
+			</div>
+		</form>
+	</div>
+	<script th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

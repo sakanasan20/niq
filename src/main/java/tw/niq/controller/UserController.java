@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import tw.niq.domain.User;
 import tw.niq.security.annotation.authority.ReadPermission;
@@ -34,6 +38,15 @@ public class UserController {
 		return "users/list";
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or (hasAuthority('write'))")
+	@GetMapping("/add")
+	public String createUser(Model model) {
+
+		model.addAttribute("user", User.builder().build());
+		
+		return "users/addOrUpdate";
+	}
+	
 	@PreAuthorize("hasRole('ADMIN') or (hasAuthority('write') and #id == principal.id)")
 	@GetMapping("/{id}/update")
 	public String updateUserById(@PathVariable(name = "id") Long id, Model model) {
@@ -42,18 +55,30 @@ public class UserController {
 		
 		model.addAttribute("user", user);
 		
-		return "users/update";
+		return "users/addOrUpdate";
+	}
+	
+	@PreAuthorize("hasRole('ADMIN') or (hasAuthority('write'))")
+	@PostMapping("/save")
+	public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("user", user);
+			return "users/addOrUpdate";
+		}
+		
+		userService.saveUser(user);
+		
+		return "redirect:" + PATH;
 	}
 	
 	@PreAuthorize("hasRole('ADMIN') or (hasAuthority('delete') and #id == principal.id)")
 	@GetMapping("/{id}/delete")
 	public String deleteUserById(@PathVariable(name = "id") Long id, Model model) {
 		
-		User user = userService.getUserById(id);
+		userService.deleteUserById(id);
 		
-		model.addAttribute("user", user);
-		
-		return "users/delete";
+		return "redirect:" + PATH;
 	}
 	
 }

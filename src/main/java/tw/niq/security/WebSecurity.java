@@ -39,10 +39,11 @@ public class WebSecurity {
 		http.authenticationManager(authenticationManager)
 			.authorizeHttpRequests((authorizeHttpRequests) -> 
 				authorizeHttpRequests
-						.requestMatchers("/resources/**", "/webjars/**", "/css/**").permitAll()
-						.requestMatchers("/login", "/logout").permitAll()
-						.requestMatchers("/h2-console/**").permitAll()
-						.anyRequest().authenticated())
+					.requestMatchers("/resources/**", "/webjars/**", "/css/**").permitAll()
+					.requestMatchers("/login", "/logout").permitAll()
+					.requestMatchers("/h2-console/**").permitAll()
+					.requestMatchers("/api/**").permitAll()
+					.anyRequest().authenticated())
 			.httpBasic(Customizer.withDefaults())
 			.formLogin(formLogin -> 
 				formLogin
@@ -59,8 +60,15 @@ public class WebSecurity {
 					.tokenRepository(persistentTokenRepository)
 					.userDetailsService(userService)
 					.rememberMeParameter("remember-me"))
-			.csrf((csrf) -> csrf.ignoringRequestMatchers("/h2-console/**"))
-			.headers((headers) -> headers.frameOptions((frameOptions) -> frameOptions.sameOrigin()))
+			.csrf((csrf) -> 
+				csrf
+					.ignoringRequestMatchers("/h2-console/**")
+					.ignoringRequestMatchers("/api/**"))
+			.headers((headers) -> 
+				headers
+					.frameOptions((frameOptions) -> 
+						frameOptions
+							.sameOrigin()))
 			.cors(Customizer.withDefaults());
 		
 		return http.build();
