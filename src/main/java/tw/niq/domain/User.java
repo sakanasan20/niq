@@ -56,22 +56,28 @@ public class User implements UserDetails {
 	
 	private String password;
 	
+	@ToString.Include
 	@Builder.Default
 	private Boolean accountNonExpired = true;
 	
+	@ToString.Include
 	@Builder.Default
 	private Boolean accountNonLocked = true;
 	
+	@ToString.Include
 	@Builder.Default
 	private Boolean credentialsNonExpired = true;
 	
+	@ToString.Include
 	@Builder.Default
 	private Boolean enabled = true;
 	
+	@ToString.Include
 	@CreationTimestamp
 	@Column(updatable = false)
 	private Timestamp createdDate;
 	
+	@ToString.Include
 	@UpdateTimestamp
 	private Timestamp lastModifiedDate;
 	

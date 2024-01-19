@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>NIQ</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/dist/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.2/font/bootstrap-icons.min.css}">
+	<link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+	<!-- Logout Modal -->
+	<div class="modal fade" id="logoutModal" aria-labelledby="logoutModalLabel" aria-hidden="true" th:fragment="logoutModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">Are you sure?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<a class="btn btn-primary" href="/logout" role="button">Confirm</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Delete User Modal -->
+	<div class="modal fade" th:id="${'deleteUserModal-' + user.id}" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true" th:fragment="deleteUserModal (user)">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">Are you sure?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<a class="btn btn-primary" th:href="@{/users/{id}/delete(id=${user.id})}" role="button">Confirm</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tw.niq.domain.User;
 import tw.niq.security.annotation.authority.ReadPermission;
 import tw.niq.service.UserService;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping(UserController.PATH)
@@ -61,6 +63,8 @@ public class UserController {
 	@PreAuthorize("hasRole('ADMIN') or (hasAuthority('write'))")
 	@PostMapping("/save")
 	public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+		
+		log.debug("### Saving...: " + user);
 		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("user", user);

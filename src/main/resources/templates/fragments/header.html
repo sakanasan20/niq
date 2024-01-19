@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>NIQ</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/dist/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.2/font/bootstrap-icons.min.css}">
+	<link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+	<!-- header -->
+	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow" th:fragment="header">
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/">NIQ</a>
+		
+		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" 
+			data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+			aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+		
+		<div class="navbar-nav">
+			<div class="nav-item text-nowrap">
+				<a sec:authorize="isAuthenticated()" class="nav-link px-3 text-light" th:href="@{/}" th:text="${#authentication?.principal?.username}"></a>
+			</div>
+		</div>
+		
+		<div class="navbar-nav">
+			<div class="nav-item text-nowrap">
+				<!-- <a class="nav-link px-3" th:href="@{/logout}">Logout</a> -->
+				<button class="nav-link px-3 m-0 p-0 border-0" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button>
+			</div>
+		</div>
+	</header>
+	
+	<script th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
