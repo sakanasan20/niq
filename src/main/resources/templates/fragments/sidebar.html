@@ -28,7 +28,9 @@
 					<div class="collapse show" id="home-collapse">
 						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 							<li class="nav-item"><a class="nav-link" th:href="@{/system}" sec:authorize="hasRole('ADMIN')">System Tools</a></li>
-							<li class="nav-item"><a class="nav-link" th:href="@{/users}" sec:authorize="hasAuthority('read')">Users</a></li>	
+							<li class="nav-item"><a class="nav-link" th:href="@{/users}" sec:authorize="hasAuthority('read')">Users</a></li>
+							<li class="nav-item"><a class="nav-link" th:href="@{/roles}" sec:authorize="hasAuthority('read')">Roles</a></li>
+							<li class="nav-item"><a class="nav-link" th:href="@{/authorities}" sec:authorize="hasAuthority('read')">Authority</a></li>	
 						</ul>
 					</div>
 				</li>

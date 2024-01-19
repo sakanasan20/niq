@@ -15,28 +15,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tw.niq.domain.User;
+import tw.niq.domain.Role;
 import tw.niq.security.annotation.authority.ReadPermission;
-import tw.niq.service.UserService;
+import tw.niq.service.RoleService;
 
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping(UserController.PATH_ROOT)
-public class UserController {
+@RequestMapping(RoleController.PATH_ROOT)
+public class RoleController {
 	
-	public static final String PATH_ROOT = "/users";
-	public static final String TEMPLATE_ROOT = "users/";
+	public static final String PATH_ROOT = "/roles";
+	public static final String TEMPLATE_ROOT = "roles/";
 	
-	private final UserService userService;
+	private final RoleService roleService;
 
 	@ReadPermission
 	@GetMapping
 	public String getList(Model model) {
 		
-		List<User> users = userService.getAllUsers();
+		List<Role> roles = roleService.getAllRoles();
 		
-		model.addAttribute("users", users);
+		model.addAttribute("roles", roles);
 		
 		return TEMPLATE_ROOT + "list";
 	}
@@ -45,7 +45,7 @@ public class UserController {
 	@GetMapping("/add")
 	public String create(Model model) {
 
-		model.addAttribute("user", User.builder().build());
+		model.addAttribute("role", Role.builder().build());
 		
 		return TEMPLATE_ROOT + "addOrUpdate";
 	}
@@ -54,25 +54,25 @@ public class UserController {
 	@GetMapping("/{id}/update")
 	public String updateById(@PathVariable(name = "id") Long id, Model model) {
 		
-		User user = userService.getUserById(id);
+		Role role = roleService.getRoleById(id);
 		
-		model.addAttribute("user", user);
+		model.addAttribute("role", role);
 		
 		return TEMPLATE_ROOT + "addOrUpdate";
 	}
 	
 	@PreAuthorize("hasRole('ADMIN') or (hasAuthority('write'))")
 	@PostMapping("/save")
-	public String save(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+	public String save(@Valid @ModelAttribute("role") Role role, BindingResult bindingResult, Model model) {
 		
-		log.debug("### Saving...: " + user);
+		log.debug("### Saving...: " + role);
 		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("user", user);
+			model.addAttribute("role", role);
 			return TEMPLATE_ROOT + "addOrUpdate";
 		}
 		
-		userService.saveUser(user);
+		roleService.saveRole(role);
 		
 		return "redirect:" + PATH_ROOT;
 	}
@@ -81,7 +81,7 @@ public class UserController {
 	@GetMapping("/{id}/delete")
 	public String deleteById(@PathVariable(name = "id") Long id, Model model) {
 		
-		userService.deleteUserById(id);
+		roleService.deleteRoleById(id);
 		
 		return "redirect:" + PATH_ROOT;
 	}

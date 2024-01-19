@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<div th:replace="~{fragments/layout :: common-head}"></div>
+<body>
+	<!-- header -->
+	<div th:replace="~{fragments/header :: header}"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<!-- sidebar -->
+			<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="h2">Roles</h1>
+				</div>
+				
+				<form th:object="${role}" th:action="@{/roles/save}" method="post">
+					<input type="hidden" th:field="*{id}">
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label for="roleName" class="form-label">Role Name</label> 
+							<input type="text" class="form-control" th:field="*{roleName}" id="roleName" placeholder="Rolename">
+						</div>
+					</div>
+					<div class="row g-3 mt-1">
+						<div class="col-md-6">
+							<input class="btn btn-sm btn-primary" type="submit" value="Save">
+							<a class="btn btn-sm btn-danger" href="/roles" role="button">Back</a>
+						</div>
+					</div>
+				</form>
+			</main>
+		</div>
+	</div>
+	
+	<!-- Logout Modal -->
+	<div th:replace="~{fragments/modal :: logoutModal}"></div>
+	
+	<div th:replace="~{fragments/layout :: common-script}"></div>
+</body>
+</html>
