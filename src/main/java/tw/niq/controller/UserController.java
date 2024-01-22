@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tw.niq.domain.Role;
 import tw.niq.domain.User;
 import tw.niq.security.annotation.authority.ReadPermission;
+import tw.niq.service.RoleService;
 import tw.niq.service.UserService;
 
 @Slf4j
@@ -29,6 +31,7 @@ public class UserController {
 	public static final String TEMPLATE_ROOT = "users/";
 	
 	private final UserService userService;
+	private final RoleService roleService;
 
 	@ReadPermission
 	@GetMapping
@@ -55,8 +58,10 @@ public class UserController {
 	public String updateById(@PathVariable(name = "id") Long id, Model model) {
 		
 		User user = userService.getUserById(id);
+		List<Role> roles = roleService.getAllRoles();
 		
 		model.addAttribute("user", user);
+		model.addAttribute("roles", roles);
 		
 		return TEMPLATE_ROOT + "addOrUpdate";
 	}
