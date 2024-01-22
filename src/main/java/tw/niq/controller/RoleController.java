@@ -27,7 +27,7 @@ import tw.niq.service.RoleService;
 @RequestMapping(RoleController.PATH_ROOT)
 public class RoleController {
 	
-	public static final String PATH_ROOT = "/roles";
+	public static final String PATH_ROOT = "/system/admin/roles";
 	public static final String TEMPLATE_ROOT = "roles/";
 	
 	private final RoleService roleService;

@@ -13,11 +13,14 @@ import tw.niq.domain.Authority;
 import tw.niq.domain.Beer;
 import tw.niq.domain.BeerStyle;
 import tw.niq.domain.Customer;
+import tw.niq.domain.Menu;
+import tw.niq.domain.MenuType;
 import tw.niq.domain.Role;
 import tw.niq.domain.User;
 import tw.niq.repository.AuthorityRepository;
 import tw.niq.repository.BeerRepository;
 import tw.niq.repository.CustomerRepository;
+import tw.niq.repository.MenuRepository;
 import tw.niq.repository.RoleRepository;
 import tw.niq.repository.UserRepository;
 
@@ -28,6 +31,8 @@ public class DataLoader implements CommandLineRunner {
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
 	private final AuthorityRepository authorityRepository;
+	private final MenuRepository menuRepository;
+	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	private final BeerRepository beerRepository;
@@ -40,11 +45,68 @@ public class DataLoader implements CommandLineRunner {
 		loadAuthorities();
 		loadroles();
 		loadUsers();
+		loadMenus();
 		
 		loadBeers();
 		loadCustomers();
 	}
 	
+	private void loadMenus() {
+		
+		menuRepository.saveAllAndFlush(Arrays.asList(
+				Menu.builder()
+					.menuName("System Administration")
+					.menuType(MenuType.CATALOG)
+					.uri("/system/admin")
+					.toggleTarget("system-administration")
+					.icon("bi-gear")
+					.build(), 
+				Menu.builder()
+					.menuName("System Tools")
+					.menuType(MenuType.CATALOG)
+					.uri("/system/tools")
+					.toggleTarget("system-tools")
+					.icon("bi-gear")
+					.build()
+		));
+		
+		Menu systemAdministration = menuRepository.findByMenuName("System Administration").orElseThrow();
+		Menu systemTools = menuRepository.findByMenuName("System Tools").orElseThrow();
+		
+		menuRepository.saveAllAndFlush(Arrays.asList(
+				Menu.builder()
+					.menuName("H2")
+					.menuType(MenuType.MENU)
+					.uri("/h2")
+					.parent(systemTools)
+					.build(), 
+				Menu.builder()
+					.menuName("User")
+					.menuType(MenuType.MENU)
+					.uri("/users")
+					.parent(systemAdministration)
+					.build(), 
+				Menu.builder()
+					.menuName("Role")
+					.menuType(MenuType.MENU)
+					.uri("/roles")
+					.parent(systemAdministration)
+					.build(), 
+				Menu.builder()
+					.menuName("Authority")
+					.menuType(MenuType.MENU)
+					.uri("/authorities")
+					.parent(systemAdministration)
+					.build(), 
+				Menu.builder()
+					.menuName("Menu")
+					.menuType(MenuType.MENU)
+					.uri("/menus")
+					.parent(systemAdministration)
+					.build()
+		));
+	}
+
 	private void loadCustomers() {
 
 		if (customerRepository.count() == 0) {

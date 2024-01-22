@@ -25,7 +25,7 @@ import tw.niq.service.AuthorityService;
 @RequestMapping(AuthorityController.PATH_ROOT)
 public class AuthorityController {
 	
-	public static final String PATH_ROOT = "/authorities";
+	public static final String PATH_ROOT = "/system/admin/authorities";
 	public static final String TEMPLATE_ROOT = "authorities/";
 	
 	private final AuthorityService authorityService;

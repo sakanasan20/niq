@@ -30,7 +30,7 @@
 	</div>
 	
 	<!-- Delete User Modal -->
-	<div class="modal fade" th:id="${'deleteUserModal-' + user.id}" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true" th:fragment="deleteUserModal (user)">
+	<div class="modal fade" th:id="${'deleteUserModal-' + user.id}" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true" th:fragment="deleteUserModal (pathRoot, user)">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -40,14 +40,14 @@
 				<div class="modal-body">Are you sure?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<a class="btn btn-primary" th:href="@{/users/{id}/delete(id=${user.id})}" role="button">Confirm</a>
+					<a class="btn btn-primary" th:href="@{{pathRoot}/{id}/delete (pathRoot=${pathRoot}, id=${user.id})}" role="button">Confirm</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	<!-- Delete Role Modal -->
-	<div class="modal fade" th:id="${'deleteRoleModal-' + role.id}" tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true" th:fragment="deleteRoleModal (role)">
+	<div class="modal fade" th:id="${'deleteRoleModal-' + role.id}" tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true" th:fragment="deleteRoleModal (pathRoot, role)">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -57,14 +57,14 @@
 				<div class="modal-body">Are you sure?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<a class="btn btn-primary" th:href="@{/roles/{id}/delete(id=${role.id})}" role="button">Confirm</a>
+					<a class="btn btn-primary" th:href="@{{pathRoot}/{id}/delete (pathRoot=${pathRoot}, id=${role.id})}" role="button">Confirm</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	<!-- Delete Authority Modal -->
-	<div class="modal fade" th:id="${'deleteAuthorityModal-' + authority.id}" tabindex="-1" aria-labelledby="deleteAuthorityModalLabel" aria-hidden="true" th:fragment="deleteAuthorityModal (authority)">
+	<div class="modal fade" th:id="${'deleteAuthorityModal-' + authority.id}" tabindex="-1" aria-labelledby="deleteAuthorityModalLabel" aria-hidden="true" th:fragment="deleteAuthorityModal (pathRoot, authority)">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -74,7 +74,24 @@
 				<div class="modal-body">Are you sure?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<a class="btn btn-primary" th:href="@{/authorities/{id}/delete(id=${authority.id})}" role="button">Confirm</a>
+					<a class="btn btn-primary" th:href="@{{pathRoot}/{id}/delete (pathRoot=${pathRoot}, id=${authority.id})}" role="button">Confirm</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Delete Menu Modal -->
+	<div class="modal fade" th:id="${'deleteMenuModal-' + menu.id}" tabindex="-1" aria-labelledby="deleteMenuModalLabel" aria-hidden="true" th:fragment="deleteMenuModal (pathRoot, menu)">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteMenuModalLabel">Delete Authority</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">Are you sure?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<a class="btn btn-primary" th:href="@{{pathRoot}/{id}/delete (pathRoot=${pathRoot}, id=${menu.id})}" role="button">Confirm</a>
 				</div>
 			</div>
 		</div>

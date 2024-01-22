@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import tw.niq.domain.Authority;
 import tw.niq.repository.AuthorityRepository;
@@ -26,7 +25,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 	}
 
 	@Override
-	public Authority saveAuthority(@Valid Authority authority) {
+	public Authority saveAuthority(Authority authority) {
 		
 		Authority savedAuthority;
 		

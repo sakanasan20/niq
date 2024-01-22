@@ -8,22 +8,22 @@
 	<!-- header -->
 	<div th:replace="~{fragments/header :: header}"></div>
 	
-	<div class="container-fluid" th:with="pathRoot='/system/admin/authorities'">
+	<div class="container-fluid" th:with="pathRoot='/system/admin/menus'">
 		<div class="row">
 			<!-- sidebar -->
 			<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">Authorities</h1>
+					<h1 class="h2">Menu</h1>
 				</div>
 				
-				<form th:object="${authority}" th:action="@{{pathRoot}/save (pathRoot=${pathRoot})}" method="post">
+				<form th:object="${menu}" th:action="@{{pathRoot}/save (pathRoot=${pathRoot})}" method="post">
 					<input type="hidden" th:field="*{id}">
 					<div class="row g-3">
 						<div class="col-md-6">
-							<label for="permission" class="form-label">Permission</label> 
-							<input type="text" class="form-control" th:field="*{permission}" id="permission" placeholder="Permission">
+							<label for="permission" class="form-label">Menu Name</label> 
+							<input type="text" class="form-control" th:field="*{menuName}" id="menuName" placeholder="Menu Name">
 						</div>
 					</div>
 					<div class="row g-3 mt-1">

@@ -8,7 +8,7 @@
 	<!-- header -->
 	<div th:replace="~{fragments/header :: header}"></div>
 
-	<div class="container-fluid">
+	<div class="container-fluid" th:with="pathRoot='/system/admin/authorities'">
 		<div class="row">
 			<!-- sidebar -->
 			<div th:replace="~{fragments/sidebar :: sidebar}"></div>
@@ -18,10 +18,10 @@
 					<h1 class="h2">Authorities</h1>
 					<div class="btn-toolbar mb-2 mb-md-0">
 						<div class="btn-group me-2">
-							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{/authorities/add}" authority="button">Add</a>
-							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{/authorities/add}" authority="button">Update</a>
-							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{/authorities/add}" authority="button">Delete</a>
-							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{/authorities/add}" authority="button">Export</a>
+							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Add</a>
+							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Update</a>
+							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Delete</a>
+							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Export</a>
 						</div>
 					</div>
 				</div>
@@ -42,14 +42,19 @@
 								<td th:text="${authority.id}"></td>
 								<td th:text="${authority.permission}"></td>
 								<td>
-									<a sec:authorize="hasAuthority('write')" th:href="@{/authorities/{id}/update(id=${authority.id})}"><span class="badge bg-primary"><i class="bi-pencil-square me-1"></i>Update</span></a>
+									<a sec:authorize="hasAuthority('write')" th:href="@{{pathRoot}/{id}/update (pathRoot=${pathRoot}, id=${authority.id})}">
+										<span class="badge bg-primary"><i class="bi-pencil-square me-1"></i>Update</span>
+									</a>
 									
-									<button sec:authorize="hasAuthority('delete')" class="m-0 p-0 border-0 bg-transparent" data-bs-toggle="modal" th:data-bs-target="${'#deleteAuthorityModal-' + authority.id}">
+									<button  class="m-0 p-0 border-0 bg-transparent" 
+										data-bs-toggle="modal" 
+										th:data-bs-target="${'#deleteAuthorityModal-' + authority.id}"
+										sec:authorize="hasAuthority('delete')">
 										<span class="badge bg-danger"><i class="bi-x-lg me-1"></i>Delete</span>
 									</button>
 									
 									<!-- Delete Authority Modal -->
-									<div th:replace="~{fragments/modal :: deleteAuthorityModal (authority=${authority})}"></div>
+									<div th:replace="~{fragments/modal :: deleteAuthorityModal (pathRoot=${pathRoot}, authority=${authority})}"></div>
 								</td>
 							</tr>
 						</tbody>

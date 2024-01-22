@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import tw.niq.service.CustomerService;
 
 @RequiredArgsConstructor
 @RestController
@@ -14,7 +13,7 @@ public class CustomerController {
 	public static final String PATH_V1_CUSTOMERS= "/api/v1/customers";
 	public static final String PATH_V1_CUSTOMERS_ID = PATH_V1_CUSTOMERS + "/{id}";
 
-	private final CustomerService customerService;
+//	private final CustomerService customerService;
 
 //	@GetMapping
 //	public List<CustomerDto> getCustomers() {

@@ -27,7 +27,7 @@ import tw.niq.service.UserService;
 @RequestMapping(UserController.PATH_ROOT)
 public class UserController {
 	
-	public static final String PATH_ROOT = "/users";
+	public static final String PATH_ROOT = "/system/admin/users";
 	public static final String TEMPLATE_ROOT = "users/";
 	
 	private final UserService userService;

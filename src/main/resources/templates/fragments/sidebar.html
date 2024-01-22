@@ -17,26 +17,40 @@
 	<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="sidebar">
 		<div class="position-sticky pt-3">
 			<ul class="nav flex-column">
-				<li class="nav-item"><a class="nav-link active" aria-current="page" href="/"><i class="bi-house-door me-2"></i>Home</a></li>				
+				<li class="nav-item"><a class="nav-link" th:classappend="${requestURI == '/' ? 'active' : '' }" aria-current="page" href="/"><i class="bi-house-door me-2"></i>Home</a></li>				
 			</ul>
 			
-			<ul class="list-unstyled ps-0">
-				<li class="mb-1 nav-item">
-					<button class="btn btn-toggle align-items-center rounded collapsed nav-link" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-						<i class="bi-gear me-2"></i>System
+			<ul class="list-unstyled ps-0">				
+				<li class="mb-1 nav-item" 
+					th:each="menu : ${menus}" th:if="${menu.menuType.name() == 'CATALOG'}" 
+					th:with="catalogName=${menu.menuName}">
+					<button class="btn btn-toggle align-items-center rounded collapsed nav-link"
+						th:classappend="${#strings.contains(requestURI, menu.uri) ? 'active' : '' }" 
+						data-bs-toggle="collapse" 
+						th:data-bs-target="${'#' + menu.toggleTarget}" 
+						th:aria-expanded="${#strings.contains(requestURI, menu.uri)}">
+						<i th:class="${menu.icon} + ' me-2'"></i><span th:text="${menu.menuName}"></span>
 					</button>
-					<div class="collapse show" id="home-collapse">
+					<div class="collapse" 
+						th:classappend="${#strings.contains(requestURI, menu.uri) ? 'show' : '' }" 
+						th:id="${menu.toggleTarget}">
 						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-							<li class="nav-item"><a class="nav-link" th:href="@{/system}" sec:authorize="hasRole('ADMIN')">System Tools</a></li>
-							<li class="nav-item"><a class="nav-link" th:href="@{/users}" sec:authorize="hasAuthority('read')">Users</a></li>
-							<li class="nav-item"><a class="nav-link" th:href="@{/roles}" sec:authorize="hasAuthority('read')">Roles</a></li>
-							<li class="nav-item"><a class="nav-link" th:href="@{/authorities}" sec:authorize="hasAuthority('read')">Authority</a></li>	
+							<li class="nav-item" 
+								th:each="menu : ${menus}" 
+								th:if="${menu.menuType.name() == 'MENU' && menu.parent.menuName == catalogName}">
+								<a class="nav-link" 
+									th:href="@{{parentUri}{uri}(parentUri=${menu.parent.uri}, uri=${menu.uri})}" 
+									th:text="${menu.menuName}"></a>
+							</li>	
 						</ul>
 					</div>
 				</li>
+				
 				<li class="border-top my-3"></li>
+				
 				<li class="mb-1 nav-item">
-					<button class="btn btn-toggle align-items-center rounded collapsed nav-link " data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+					<button class="btn btn-toggle align-items-center rounded collapsed nav-link " 
+						data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
 						<i class="bi-person me-2"></i>Account
 					</button>
 					<div class="collapse" id="account-collapse">

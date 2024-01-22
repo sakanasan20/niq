@@ -8,14 +8,14 @@
 	<!-- header -->
 	<div th:replace="~{fragments/header :: header}"></div>
 
-	<div class="container-fluid" th:with="pathRoot='/system/admin/users'">
+	<div class="container-fluid" th:with="pathRoot='/system/admin/menus'">
 		<div class="row">
 			<!-- sidebar -->
 			<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">Users</h1>
+					<h1 class="h2">Menus</h1>
 					<div class="btn-toolbar mb-2 mb-md-0">
 						<div class="btn-group me-2">
 							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Add</a>
@@ -32,29 +32,26 @@
 							<tr>
 								<th scope="col"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
 								<th scope="col">ID</th>
-								<th scope="col">Username</th>
+								<th scope="col">Menu Name</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="user : ${users}">
+							<tr th:each="menu : ${menus}">
 								<th scope="row"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-								<td th:text="${user.id}"></td>
-								<td th:text="${user.username}"></td>
+								<td th:text="${menu.id}"></td>
+								<td th:text="${menu.menuName}"></td>
 								<td>
-									<a sec:authorize="hasAuthority('write')" th:href="@{{pathRoot}/{id}/update (pathRoot=${pathRoot}, id=${user.id})}">
+									<a sec:authorize="hasAuthority('write')" th:href="@{{pathRoot}/{id}/update (pathRoot=${pathRoot}, id=${menu.id})}">
 										<span class="badge bg-primary"><i class="bi-pencil-square me-1"></i>Update</span>
 									</a>
 									
-									<button class="m-0 p-0 border-0 bg-transparent" 
-										data-bs-toggle="modal" 
-										th:data-bs-target="${'#deleteUserModal-' + user.id}"
-										sec:authorize="hasAuthority('delete')">
+									<button sec:authorize="hasAuthority('delete')" class="m-0 p-0 border-0 bg-transparent" data-bs-toggle="modal" th:data-bs-target="${'#deleteMenuModal-' + menu.id}">
 										<span class="badge bg-danger"><i class="bi-x-lg me-1"></i>Delete</span>
 									</button>
 									
-									<!-- Delete User Modal -->
-									<div th:replace="~{fragments/modal :: deleteUserModal (pathRoot=${pathRoot}, user=${user})}"></div>
+									<!-- Delete Authority Modal -->
+									<div th:replace="~{fragments/modal :: deleteMenuModal (pathRoot=${pathRoot}, menu=${menu})}"></div>
 								</td>
 							</tr>
 						</tbody>

@@ -2,7 +2,6 @@ package tw.niq.service;
 
 import java.util.List;
 
-import jakarta.validation.Valid;
 import tw.niq.domain.Authority;
 
 public interface AuthorityService {
@@ -11,7 +10,7 @@ public interface AuthorityService {
 
 	Authority getAuthorityById(Long id);
 
-	Authority saveAuthority(@Valid Authority authority);
+	Authority saveAuthority(Authority authority);
 
 	void deleteAuthorityById(Long id);
 

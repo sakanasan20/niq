@@ -7,7 +7,8 @@
 <body>
 	<!-- header -->
 	<div th:replace="~{fragments/header :: header}"></div>
-	<div class="container-fluid">
+	
+	<div class="container-fluid" th:with="pathRoot='/system/admin/roles'">
 		<div class="row">
 			<!-- sidebar -->
 			<div th:replace="~{fragments/sidebar :: sidebar}"></div>
@@ -17,7 +18,7 @@
 					<h1 class="h2">Roles</h1>
 				</div>
 				
-				<form th:object="${role}" th:action="@{/roles/save}" method="post">
+				<form th:object="${role}" th:action="@{{pathRoot}/save (pathRoot=${pathRoot})}" method="post">
 					<input type="hidden" th:field="*{id}">
 					<div class="row g-3">
 						<div class="col-md-6">
@@ -39,7 +40,7 @@
 					<div class="row g-3 mt-1">
 						<div class="col-md-6">
 							<input class="btn btn-sm btn-primary" type="submit" value="Save">
-							<a class="btn btn-sm btn-danger" href="/roles" role="button">Back</a>
+							<a class="btn btn-sm btn-danger" th:href="@{{pathRoot} (pathRoot=${pathRoot})}" role="button">Back</a>
 						</div>
 					</div>
 				</form>

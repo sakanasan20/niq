@@ -8,7 +8,7 @@
 	<!-- header -->
 	<div th:replace="~{fragments/header :: header}"></div>
 
-	<div class="container-fluid">
+	<div class="container-fluid" th:with="pathRoot='/system/admin/roles'">
 		<div class="row">
 			<!-- sidebar -->
 			<div th:replace="~{fragments/sidebar :: sidebar}"></div>
@@ -18,10 +18,10 @@
 					<h1 class="h2">Roles</h1>
 					<div class="btn-toolbar mb-2 mb-md-0">
 						<div class="btn-group me-2">
-							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{/roles/add}" role="button">Add</a>
-							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{/roles/add}" role="button">Update</a>
-							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{/roles/add}" role="button">Delete</a>
-							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{/roles/add}" role="button">Export</a>
+							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Add</a>
+							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Update</a>
+							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Delete</a>
+							<a sec:authorize="hasAuthority('write')" class="btn btn-sm btn-outline-secondary" th:href="@{{pathRoot}/add (pathRoot=${pathRoot})}" role="button">Export</a>
 						</div>
 					</div>
 				</div>
@@ -42,14 +42,20 @@
 								<td th:text="${role.id}"></td>
 								<td th:text="${role.roleName}"></td>
 								<td>
-									<a sec:authorize="hasAuthority('write')" th:href="@{/roles/{id}/update(id=${role.id})}"><span class="badge bg-primary"><i class="bi-pencil-square me-1"></i>Update</span></a>
+									<a sec:authorize="hasAuthority('write')" th:href="@{{pathRoot}/{id}/update (pathRoot=${pathRoot}, id=${role.id})}">
+										<span class="badge bg-primary"><i class="bi-pencil-square me-1"></i>Update</span>
+									</a>
 									
-									<button sec:authorize="hasAuthority('delete')" class="m-0 p-0 border-0 bg-transparent" data-bs-toggle="modal" th:data-bs-target="${'#deleteRoleModal-' + role.id}">
+									<button 
+										class="m-0 p-0 border-0 bg-transparent" 
+										data-bs-toggle="modal" 
+										th:data-bs-target="${'#deleteRoleModal-' + role.id}"
+										sec:authorize="hasAuthority('delete')">
 										<span class="badge bg-danger"><i class="bi-x-lg me-1"></i>Delete</span>
 									</button>
 									
 									<!-- Delete Role Modal -->
-									<div th:replace="~{fragments/modal :: deleteRoleModal (role=${role})}"></div>
+									<div th:replace="~{fragments/modal :: deleteRoleModal (pathRoot=${pathRoot}, role=${role})}"></div>
 								</td>
 							</tr>
 						</tbody>
