@@ -32,6 +32,7 @@ public class RoleServiceImpl implements RoleService {
 		if (role.getId() != null) {
 			Role foundRole = roleRepository.findById(role.getId()).get();
 			foundRole.setRoleName(role.getRoleName());
+			foundRole.setAuthorities(role.getAuthorities());
 			savedRole = roleRepository.save(foundRole);
 		} else {
 			savedRole = roleRepository.save(role);

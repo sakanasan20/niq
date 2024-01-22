@@ -18,12 +18,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Singular;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "niq_role")
 public class Role {
@@ -32,6 +34,7 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ToString.Include
 	private String roleName;
 	
 	@ManyToMany(mappedBy = "roles")

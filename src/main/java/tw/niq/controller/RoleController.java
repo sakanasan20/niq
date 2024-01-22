@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tw.niq.domain.Authority;
 import tw.niq.domain.Role;
 import tw.niq.security.annotation.authority.ReadPermission;
+import tw.niq.service.AuthorityService;
 import tw.niq.service.RoleService;
 
 @Slf4j
@@ -29,6 +31,7 @@ public class RoleController {
 	public static final String TEMPLATE_ROOT = "roles/";
 	
 	private final RoleService roleService;
+	private final AuthorityService authorityService;
 
 	@ReadPermission
 	@GetMapping
@@ -55,8 +58,10 @@ public class RoleController {
 	public String updateById(@PathVariable(name = "id") Long id, Model model) {
 		
 		Role role = roleService.getRoleById(id);
+		List<Authority> authorities = authorityService.getAllAuthorities();
 		
 		model.addAttribute("role", role);
+		model.addAttribute("authorities", authorities);	
 		
 		return TEMPLATE_ROOT + "addOrUpdate";
 	}
@@ -66,6 +71,7 @@ public class RoleController {
 	public String save(@Valid @ModelAttribute("role") Role role, BindingResult bindingResult, Model model) {
 		
 		log.debug("### Saving...: " + role);
+		log.debug("### Saving...: " + role.getAuthorities());
 		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("role", role);

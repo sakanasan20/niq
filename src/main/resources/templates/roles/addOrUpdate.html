@@ -27,6 +27,17 @@
 					</div>
 					<div class="row g-3 mt-1">
 						<div class="col-md-6">
+							<label class="form-label">Authorities</label>
+							<ul class="list-group">
+								<li class="list-group-item" th:each="authority : ${authorities}">
+									<input class="form-check-input me-1" type="checkbox" th:field="*{authorities}" th:value="${authority.id}">
+									<label th:text="${authority.permission}"></label>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="row g-3 mt-1">
+						<div class="col-md-6">
 							<input class="btn btn-sm btn-primary" type="submit" value="Save">
 							<a class="btn btn-sm btn-danger" href="/roles" role="button">Back</a>
 						</div>

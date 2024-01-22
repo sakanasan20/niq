@@ -44,7 +44,7 @@
 								<td>
 									<a sec:authorize="hasAuthority('write')" th:href="@{/roles/{id}/update(id=${role.id})}"><span class="badge bg-primary"><i class="bi-pencil-square me-1"></i>Update</span></a>
 									
-									<button sec:authorize="hasAuthority('delete')" class="m-0 p-0 border-0" data-bs-toggle="modal" th:data-bs-target="${'#deleteRoleModal-' + role.id}">
+									<button sec:authorize="hasAuthority('delete')" class="m-0 p-0 border-0 bg-transparent" data-bs-toggle="modal" th:data-bs-target="${'#deleteRoleModal-' + role.id}">
 										<span class="badge bg-danger"><i class="bi-x-lg me-1"></i>Delete</span>
 									</button>
 									
