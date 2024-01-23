@@ -1,5 +1,6 @@
 package tw.niq.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,6 +33,7 @@ public class Menu {
 	
 	@NotBlank
 	@ToString.Include
+	@Column(unique = true)
 	private String menuName;
 	
 	@ManyToOne
@@ -54,5 +56,9 @@ public class Menu {
 	
 	@ToString.Include
 	private String toggleTarget;
+	
+	public String getToggleTarget() {
+		return this.menuName == null ? "" : this.menuName.toLowerCase().replaceAll(" ", "-");
+	}
 	
 }

@@ -33,6 +33,7 @@
 								<th scope="col"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
 								<th scope="col">ID</th>
 								<th scope="col">Menu Name</th>
+								<th scope="col">Menu Type</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
@@ -41,6 +42,7 @@
 								<th scope="row"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
 								<td th:text="${menu.id}"></td>
 								<td th:text="${menu.menuName}"></td>
+								<td th:text="${menu.menuType.displayValue}"></td>
 								<td>
 									<a sec:authorize="hasAuthority('write')" th:href="@{{pathRoot}/{id}/update (pathRoot=${pathRoot}, id=${menu.id})}">
 										<span class="badge bg-primary"><i class="bi-pencil-square me-1"></i>Update</span>

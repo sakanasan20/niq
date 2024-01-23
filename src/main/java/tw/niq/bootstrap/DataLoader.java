@@ -58,14 +58,12 @@ public class DataLoader implements CommandLineRunner {
 					.menuName("System Administration")
 					.menuType(MenuType.CATALOG)
 					.uri("/system/admin")
-					.toggleTarget("system-administration")
 					.icon("bi-gear")
 					.build(), 
 				Menu.builder()
 					.menuName("System Tools")
 					.menuType(MenuType.CATALOG)
 					.uri("/system/tools")
-					.toggleTarget("system-tools")
 					.icon("bi-gear")
 					.build()
 		));

@@ -20,6 +20,7 @@
 				
 				<form th:object="${menu}" th:action="@{{pathRoot}/save (pathRoot=${pathRoot})}" method="post">
 					<input type="hidden" th:field="*{id}">
+					<input type="hidden" th:field="*{toggleTarget}">
 					<div class="row g-3">
 						<div class="col-md-6">
 							<label for="menuName" class="form-label">Menu Name</label> 
@@ -47,10 +48,6 @@
 						</div>
 					</div>
 					<div class="row g-3 mt-1">
-						<div class="col-md-6">
-							<label for="toggleTarget" class="form-label">Toggle Target</label> 
-							<input type="text" class="form-control" th:field="*{toggleTarget}" id="toggleTarget" placeholder="Toggle Target">
-						</div>
 						<div class="col-md-6">
 							<label for="permission" class="form-label">Permission</label> 
 							<input type="text" class="form-control" th:field="*{permission}" id="permission" placeholder="Permission">
