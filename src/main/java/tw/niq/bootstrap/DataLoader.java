@@ -15,12 +15,14 @@ import tw.niq.domain.BeerStyle;
 import tw.niq.domain.Customer;
 import tw.niq.domain.Menu;
 import tw.niq.domain.MenuType;
+import tw.niq.domain.Notice;
 import tw.niq.domain.Role;
 import tw.niq.domain.User;
 import tw.niq.repository.AuthorityRepository;
 import tw.niq.repository.BeerRepository;
 import tw.niq.repository.CustomerRepository;
 import tw.niq.repository.MenuRepository;
+import tw.niq.repository.NoticeRepository;
 import tw.niq.repository.RoleRepository;
 import tw.niq.repository.UserRepository;
 
@@ -32,6 +34,7 @@ public class DataLoader implements CommandLineRunner {
 	private final RoleRepository roleRepository;
 	private final AuthorityRepository authorityRepository;
 	private final MenuRepository menuRepository;
+	private final NoticeRepository noticeRepository;
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -46,11 +49,20 @@ public class DataLoader implements CommandLineRunner {
 		loadroles();
 		loadUsers();
 		loadMenus();
+		loadNotices();
 		
 		loadBeers();
 		loadCustomers();
 	}
 	
+	private void loadNotices() {
+		noticeRepository.saveAllAndFlush(Arrays.asList(
+				Notice.builder().noticeTitle("This is 1st notice").noticeContent("blah... blah... blah...").build(), 
+				Notice.builder().noticeTitle("This is 2nd notice").noticeContent("blah... blah... blah...").build(), 
+				Notice.builder().noticeTitle("This is 3rd notice").noticeContent("blah... blah... blah...").build()
+		));
+	}
+
 	private void loadMenus() {
 		
 		menuRepository.saveAllAndFlush(Arrays.asList(
@@ -100,6 +112,12 @@ public class DataLoader implements CommandLineRunner {
 					.menuName("Menu")
 					.menuType(MenuType.MENU)
 					.uri("/menus")
+					.parent(systemAdministration)
+					.build(), 
+				Menu.builder()
+					.menuName("Notice")
+					.menuType(MenuType.MENU)
+					.uri("/notices")
 					.parent(systemAdministration)
 					.build()
 		));

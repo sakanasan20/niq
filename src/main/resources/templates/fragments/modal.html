@@ -97,6 +97,23 @@
 		</div>
 	</div>
 	
+	<!-- Delete Notice Modal -->
+	<div class="modal fade" th:id="${'deleteNoticeModal-' + notice.id}" tabindex="-1" aria-labelledby="deleteNoticeModalLabel" aria-hidden="true" th:fragment="deleteNoticeModal (pathRoot, notice)">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteNoticeModalLabel">Delete Notice</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">Are you sure?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<a class="btn btn-primary" th:href="@{{pathRoot}/{id}/delete (pathRoot=${pathRoot}, id=${notice.id})}" role="button">Confirm</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<script th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
