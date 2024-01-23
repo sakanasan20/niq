@@ -27,6 +27,16 @@
 						</button>
 					</div>
 				</div>
+
+				<div class="card mb-3" th:each="notice : ${notices}">
+					<div class="card-header text-center">Notice</div>
+					<div class="card-body">
+						<h5 class="card-title" th:text="${notice.noticeTitle}"></h5>
+						<p class="card-text" th:text="${notice.noticeContent}"></p>
+					</div>
+					<div class="card-footer text-muted text-end" 
+						th:text="${(notice.creator == null ? 'root' : notice.creator) + ' created at ' + #dates.format(notice.lastModifiedDate, 'yyyy/MM/dd HH:mm')}"></div>
+				</div>
 			</main>
 		</div>
 	</div>
