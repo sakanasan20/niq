@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tw.niq.domain.Menu;
+import tw.niq.domain.MenuType;
 import tw.niq.service.MenuService;
 
 @Slf4j
@@ -66,6 +67,11 @@ public class MenuController {
 			return TEMPLATE_ROOT + "addOrUpdate";
 		}
 		
+		if (menu.getMenuType().equals(MenuType.MENU) && menu.getParent() == null) {
+			model.addAttribute("menu", menu);
+			return TEMPLATE_ROOT + "addOrUpdate";
+		}
+
 		menuService.saveMenu(menu);
 		
 		return "redirect:" + PATH_ROOT;

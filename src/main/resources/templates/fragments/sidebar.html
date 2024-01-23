@@ -29,7 +29,7 @@
 						data-bs-toggle="collapse" 
 						th:data-bs-target="${'#' + menu.toggleTarget}" 
 						th:aria-expanded="${#strings.contains(requestURI, menu.uri)}">
-						<i th:class="${menu.icon} + ' me-2'"></i><span th:text="${menu.menuName}"></span>
+						<i th:class="${menu.icon + ' me-2'}"></i><span th:text="${menu.menuName}"></span>
 					</button>
 					<div class="collapse" 
 						th:classappend="${#strings.contains(requestURI, menu.uri) ? 'show' : '' }" 
